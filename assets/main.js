@@ -1,8 +1,4 @@
-
 var words = ["sadge","first","time","slowly","believe","albert", "yeah", "carry", "excited", "chungus", "calm","think","problems","mwah","regina", "scary"];
-
-console.log("I love selina");
-
 
 var start = false;
 var startSpeedrun = false;
@@ -10,23 +6,29 @@ var startSpeedrun = false;
 var right = 0;
 var wrong = 0;
 
+var speedrunTime = 60; //in seconds
 var timeElapsed = 0;
 var myTimer;
 
 function tick(){
-    if(start)
+	var minutes;
+
+    if(start){
     	timeElapsed++;
+    	var minutes = timeElapsed/60 + (timeElapsed%60)/60;
+    }
 
     else if(startSpeedrun){
     	timeElapsed--;
+    	var minutes = (speedrunTime-timeElapsed)/60 + ((speedrunTime-timeElapsed)%60)/60;
     	if(timeElapsed==0){
     		stoptimer();
-    		alert("Time's up!\nScore:\nCorrect: "+right+"\nIncorrect: "+wrong+"\nAccuracy: "+ (right+wrong==0?"0.00":(right/(right+wrong)).toFixed(4)*100)+"%");
+    		alert("Time's up!\nCorrect: "+right+"\nIncorrect: "+wrong+"\nAccuracy: "+ (right+wrong==0?"0.00":(right/(right+wrong)).toFixed(4)*100)+"%\nWords per Minute: "+(right/minutes).toFixed());
     	}
     }
 
-    var formattedSeconds = ("0" + (timeElapsed%60)).slice(-2);
-    document.getElementById("time").innerHTML = Math.floor(timeElapsed/60) +':' +formattedSeconds;
+    document.getElementById("time").innerHTML = Math.floor(timeElapsed/60) +':' +("0" + (timeElapsed%60)).slice(-2);
+    document.getElementById("wpm").innerHTML = (right/minutes).toFixed() +" WPM";
 }
 
 function starttimer(){
@@ -62,7 +64,7 @@ function beginPractice() {
 
 function beginSpeedrun(){
 	console.log("Start speedrun");
-	timeElapsed =3;
+	timeElapsed =speedrunTime;
 	startSpeedrun = true;
 	document.getElementById('backButton').style.visibility = "visible";
 	document.getElementById('startPracticeButton').style.display = "none";
@@ -70,7 +72,7 @@ function beginSpeedrun(){
 	document.getElementById('inputbox').value = "";
 	starttimer();
 	document.getElementById("inputbox").focus();
-	document.getElementById("time").innerHTML = '1:00';
+	document.getElementById("time").innerHTML = Math.floor(speedrunTime/60) +':' +("0" + (speedrunTime%60)).slice(-2);
 }
 
 function checktext(){
@@ -128,7 +130,7 @@ function incorrectadd(){
 function backButton(){
 	stoptimer();
 	var length = document.getElementById("wordlog").children.length;
-	for(var i=0; i<length-2; i++){
+	for(var i=0; i<length-2; i++){ //clears the list of completed words
 		document.getElementById("wordlog").removeChild(document.getElementById("wordlog").lastChild);
 	}
 	
@@ -138,9 +140,10 @@ function backButton(){
 	document.getElementById('inputbox').value = "";
 	document.getElementById("time").innerHTML = '0:00';
 	document.getElementById("word").innerHTML = "start";
-	currentword = "start";
+	document.getElementById("wpm").innerHTML = "0 WPM";
 	document.getElementById("incorrect").innerHTML = '0 incorrect';
 	document.getElementById("correct").innerHTML = '0 correct';
+	currentword = "start";
 	right = 0;
 	wrong =0;
 }
