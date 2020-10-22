@@ -4,7 +4,7 @@ Type faster while building your vocab
 
 Focus on typing speed and developing familiarity with advanced vocab words
 
-#ToDo:
+# ToDo:
 1. Add word lists and levels of difficulty 
 2. WPM and typing statistics 
 3. Animations 
