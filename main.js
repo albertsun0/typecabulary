@@ -21,7 +21,7 @@ function tick(){
     	timeElapsed--;
     	if(timeElapsed==0){
     		stoptimer();
-    		alert("Time's up!\nScore:\nCorrect: "+right+"\nIncorrect: "+wrong+"\nAccuracy: "+ (right+wrong==0?"0.00":(right/(right+wrong)).toFixed(2))+"%");
+    		alert("Time's up!\nScore:\nCorrect: "+right+"\nIncorrect: "+wrong+"\nAccuracy: "+ (right+wrong==0?"0.00":(right/(right+wrong)).toFixed(4)*100)+"%");
     	}
     }
 
@@ -60,7 +60,7 @@ function beginPractice() {
 
 function beginSpeedrun(){
 	console.log("Start speedrun");
-	timeElapsed =60;
+	timeElapsed =3;
 	startSpeedrun = true;
 	document.getElementById('backButton').style.visibility = "visible";
 	document.getElementById('startPracticeButton').style.display = "none";
