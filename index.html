@@ -1,84 +1,11 @@
 <head>
-	<title>Typing For Selina</title>
-	<script src = "main.js"></script>
+	<title>Vocab Typer</title>
+	<script src = "assets/main.js"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-	<link rel="icon" href="fav.png" type="image/gif" sizes="16x16">
+	<link rel="icon" href="assets/fav.png" type="image/gif" sizes="16x16">
+	<link rel="stylesheet" type="text/css" href="assets/main.css">
 </head>
 
-<style type="text/css">
-	.body, html{
-		font-family:'Montserrat','Roboto', Charcoal, sans-serif;
-		width: 100%;
-		margin: 0;
-		font-family: 
-	}
-
-	.back-button{
-		position: absolute;
-		left: 10px;
-		top: 10px;
-		visibility: hidden;
-	}
-	.button{
-		border: none;
-		padding:10px;
-		cursor: pointer;
-		transition: 0.4s;
-	}
-	.word{
-		font-size: 40px;
-	}
-	.correct{
-		color: lightgreen;
-	}
-	.incorrect{
-		color: tomato;
-	}
-	.textbox{
-		font-size: 20px;
-		border: none;
-		border-bottom: 1px solid black;
-	}
-	input:focus{
-		outline: none !important;
-		border-bottom: 1px solid black;
-	}
-	.wrap{
-		margin-top: 100px;
-	}
-
-	.wordlog{
-	    position: absolute;
-	    left: 80%; 
-	    transition: 1s;
-	    border-left: 1px solid lightgrey;
-	    height: 100vh;
-	    padding-left: 1%;
-	    top: 0;
-	    width: 18.9%;
-	    overflow-y: scroll;
-	    overflow-x: hidden;
-	}
-	.game{
-		width: 80%;
-		text-align: center;
-	}
-	.loggedwordcorrect{
-		width: 95%;
-		font-size: 15px;
-		background-color: lightgreen;
-		color: white;
-		padding: 7px;
-	}
-	.loggedwordincorrect{
-		width: 95%;
-		font-size: 15px;
-		background-color: tomato;
-		color: white;
-		padding: 7px;
-	}
-
-</style>
 <body>
 
 	<div class="game">
@@ -92,7 +19,7 @@
 		</div>
 		<h1 id="time">0:00</h1>
 		
-		<h1 id="word" class="word">Selina</h1>
+		<h1 id="word" class="word">start</h1>
 
 		<input type="text" id="inputbox" class= "textbox" onchange="checktext()">
 
