@@ -13,6 +13,12 @@
 		font-family: 
 	}
 
+	.back-button{
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		visibility: hidden;
+	}
 	.button{
 		border: none;
 		padding:10px;
@@ -78,7 +84,12 @@
 	<div class="game">
 		<div class="wrap">
 
-		<button id="startb" onclick="begin()" class="button">Start</button>
+		<button class="back-button button" onclick="backButton()" id="backButton">Back</button>
+
+		<div class="button-row">
+			<button id="startPracticeButton" onclick="beginPractice()" class="button">Start Practice</button>
+			<button id="startSpeedrunButton" onclick="beginSpeedrun()" class="button">Start Speedrun</button>
+		</div>
 		<h1 id="time">0:00</h1>
 		
 		<h1 id="word" class="word">Selina</h1>
