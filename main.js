@@ -5,6 +5,7 @@ console.log("I love selina");
 
 
 var start = false;
+var startSpeedrun = false;
 
 var right = 0;
 var wrong = 0;
@@ -13,8 +14,19 @@ var timeElapsed = 0;
 var myTimer;
 
 function tick(){
-    timeElapsed++;
-    document.getElementById("time").innerHTML = Math.floor(timeElapsed/60) +':' +timeElapsed%60;
+    if(start)
+    	timeElapsed++;
+
+    else if(startSpeedrun){
+    	timeElapsed--;
+    	if(timeElapsed==0){
+    		stoptimer();
+    		alert("Time's up!\nScore:\nCorrect: "+right+"\nIncorrect: "+wrong+"\nAccuracy: "+ (right+wrong==0?"0.00":(right/(right+wrong)).toFixed(2))+"%");
+    	}
+    }
+
+    var formattedSeconds = ("0" + (timeElapsed%60)).slice(-2);
+    document.getElementById("time").innerHTML = Math.floor(timeElapsed/60) +':' +formattedSeconds;
 }
 
 function starttimer(){
@@ -24,14 +36,18 @@ function starttimer(){
 
 function stoptimer(){
     clearInterval(myTimer);
+    start = false;
+    startSpeedrun = false;
+    timeElapsed = 0;
 }
 
 var currentword = "Selina"
-function begin() {
+function beginPractice() {
 	console.log("start");
-	time = 0;
 	start = true;
-	document.getElementById('startb').style.display = "none";
+	document.getElementById('backButton').style.visibility = "visible";
+	document.getElementById('startPracticeButton').style.display = "none";
+	document.getElementById('startSpeedrunButton').style.display = "none";
 	document.getElementById('inputbox').value = "";
 	starttimer();
 	document.getElementById("inputbox").focus();
@@ -42,8 +58,21 @@ function begin() {
 }
 */
 
+function beginSpeedrun(){
+	console.log("Start speedrun");
+	timeElapsed =60;
+	startSpeedrun = true;
+	document.getElementById('backButton').style.visibility = "visible";
+	document.getElementById('startPracticeButton').style.display = "none";
+	document.getElementById('startSpeedrunButton').style.display = "none";
+	document.getElementById('inputbox').value = "";
+	starttimer();
+	document.getElementById("inputbox").focus();
+	document.getElementById("time").innerHTML = '1:00';
+}
+
 function checktext(){
-	if(start == true){
+	if(start || startSpeedrun){
 		console.log("update");
 		const textbox = document.getElementById('inputbox');
 
@@ -92,4 +121,24 @@ function incorrectadd(){
 	add.innerHTML = currentword;
 	add.classList.add("loggedwordincorrect"); 
 	document.getElementById("wordlog").appendChild(add);
+}
+
+function backButton(){
+	stoptimer();
+	var length = document.getElementById("wordlog").children.length;
+	for(var i=0; i<length-2; i++){
+		document.getElementById("wordlog").removeChild(document.getElementById("wordlog").lastChild);
+	}
+	
+	document.getElementById('startPracticeButton').style.display = "inline";
+	document.getElementById('startSpeedrunButton').style.display = "inline";
+	document.getElementById('backButton').style.visibility = "hidden";
+	document.getElementById('inputbox').value = "";
+	document.getElementById("time").innerHTML = '0:00';
+	document.getElementById("word").innerHTML = "Selina";
+	currentword = "Selina";
+	document.getElementById("incorrect").innerHTML = '0 incorrect';
+	document.getElementById("correct").innerHTML = '0 correct';
+	right = 0;
+	wrong =0;
 }
