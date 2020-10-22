@@ -15,18 +15,18 @@ function tick(){
 
     if(start){
     	timeElapsed++;
-    	var minutes = timeElapsed/60 + (timeElapsed%60)/60;
+    	var minutes = timeElapsed/60;
     }
 
     else if(startSpeedrun){
     	timeElapsed--;
-    	var minutes = (speedrunTime-timeElapsed)/60 + ((speedrunTime-timeElapsed)%60)/60;
+    	var minutes = (speedrunTime-timeElapsed)/60;
     	if(timeElapsed==0){
     		stoptimer();
     		alert("Time's up!\nCorrect: "+right+"\nIncorrect: "+wrong+"\nAccuracy: "+ (right+wrong==0?"0.00":(right/(right+wrong)).toFixed(4)*100)+"%\nWords per Minute: "+(right/minutes).toFixed());
     	}
     }
-
+    
     document.getElementById("time").innerHTML = Math.floor(timeElapsed/60) +':' +("0" + (timeElapsed%60)).slice(-2);
     document.getElementById("wpm").innerHTML = (right/minutes).toFixed() +" WPM";
 }
