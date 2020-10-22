@@ -1,5 +1,7 @@
 # vocab-typer
 
+https://qwertyuiop888.github.io/vocab-typer/index.html
+
 Type faster while building your vocab
 
 Focus on typing speed and developing familiarity with advanced vocab words
