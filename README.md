@@ -1,4 +1,4 @@
-# vocab-typer
+# Typecabulary
 
 https://qwertyuiop888.github.io/vocab-typer/index.html
 
