@@ -1,6 +1,6 @@
 # Typecabulary
 
-https://qwertyuiop888.github.io/vocab-typer/index.html
+https://qwertyuiop888.github.io/typecabulary/index.html
 
 Type faster while building your vocab
 
