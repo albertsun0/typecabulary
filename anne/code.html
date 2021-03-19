@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<script type="text/javascript">
+	var ans = "I'm so proud of you. Lets make more games together, except you should help with the code. :smirkcat:"
+	var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZW?><1239-8290-,:"
+
+	var ansarr = ans.split('');
+	var arr = chars.split('');
+
+	var out = "";
+
+	var ansindex = 0;
+	var index = 1;
+
+	while(ansindex < ans.length){
+		console.log(ansindex);
+		if((index % 3 == 0 || index % 19 == 0)){
+			out+=ansarr[ansindex];
+			ansindex++;
+		}
+		else{
+			out+= arr[Math.floor(Math.random()*arr.length)];
+		}
+		index++;
+	}
+
+	function decode(input) {
+		var split = input.split('');
+		var ans;
+		for(var i =0; i<split.length; i++){
+			if((i+1)%3 ==0 || (i+1)%19 ==0){
+				ans+=split[i];
+			}
+		}
+		console.log(ans);
+	}
+
+</script>
+
+</html>

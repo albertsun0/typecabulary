@@ -1,5 +1,4 @@
-var str = "a I cant believe it already a year together Time goes so fast when I am with you This year has been only amazing, all because of you I am so happy waking up knowing I have you every day the cutest most beautiful girl in the world"
-var words = str.split(" ");
+var words = ["sadge","first","time","slowly","believe","albert", "yeah", "carry", "excited", "chungus", "calm","think","problems","mwah","regina", "scary"];
 
 var start = false;
 var startSpeedrun = false;
@@ -45,8 +44,7 @@ function stoptimer(){
 }
 
 var currentword = "start";
-var index = 1;
-var nextword = words[index];
+var nextword = words[Math.floor(Math.random() * words.length)];
 
 function beginPractice() {
 	console.log("start");
@@ -112,13 +110,8 @@ function checktext(){
 }
 
 function newword(){
-	if(index == words.length){
-		alert("hehe thanks for completing your daily typing practice");
-		window.location.href = "anne/puzzle.html";
-	}
 	currentword = nextword;
-	index++;
-	nextword = words[index];
+	nextword = words[Math.floor(Math.random() * words.length)];
 	console.log(currentword);
 	document.getElementById("word").innerHTML = currentword;
 	document.getElementById("nextword").innerHTML = nextword;
