@@ -1,4 +1,32 @@
-var words = ["sadge","first","time","slowly","believe","albert", "yeah", "carry", "excited", "chungus", "calm","think","problems","mwah","regina", "scary"];
+var allText;
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                allText = rawFile.responseText;
+                
+            }
+        }
+    }
+    rawFile.send(null);
+}
+readTextFile("assets/wordlists/wordlist.txt");
+var WordWithDef = allText.split("\n");
+for(var i =0; i<WordWithDef.length; i++){
+	WordWithDef[i] = WordWithDef[i].substring(0,WordWithDef[i].length-4);
+}
+var words = [];
+for(var i =0; i<WordWithDef.length; i++){
+	temp = WordWithDef[i].split(/[\s,(-]+/);
+	words[i] = temp[0];
+}
 
 var start = false;
 var startSpeedrun = false;
@@ -44,7 +72,9 @@ function stoptimer(){
 }
 
 var currentword = "start";
-var nextword = words[Math.floor(Math.random() * words.length)];
+var nextwordIndex = Math.floor(Math.random() * words.length);
+var nextword = words[nextwordIndex];
+var currentwordIndex = 0;
 
 function beginPractice() {
 	console.log("start");
@@ -81,6 +111,18 @@ function begin(){
 	document.getElementById("nextword").innerHTML = nextword;
 }
 
+document.addEventListener('keyup', event => {
+  if (event.code === 'Space' || event.code === 'Enter') {
+    checktext();
+  }
+})
+
+function RestrictSpace() {
+    if (event.code === 'Space') {
+        return false;
+    }
+}
+
 function checktext(){
 	if(start || startSpeedrun){
 		console.log("update");
@@ -90,7 +132,9 @@ function checktext(){
 		if (textbox.value == currentword) {
 			console.log("correct");
 			right++;
-			correctadd();
+			if (currentwordIndex != 0) {
+				correctadd();
+			}
 			newword();
 			textbox.style.color = "black";
 			textbox.value = "";
@@ -98,7 +142,9 @@ function checktext(){
 		}
 		else{
 			wrong++;
-			incorrectadd();
+			if (currentwordIndex != 0) {
+				incorrectadd();
+			}
 			textbox.style.color = "red";
 			
 		}
@@ -111,7 +157,9 @@ function checktext(){
 
 function newword(){
 	currentword = nextword;
-	nextword = words[Math.floor(Math.random() * words.length)];
+	currentwordIndex = nextwordIndex;
+	nextwordIndex = Math.floor(Math.random() * words.length);
+	nextword = words[nextwordIndex];
 	console.log(currentword);
 	document.getElementById("word").innerHTML = currentword;
 	document.getElementById("nextword").innerHTML = nextword;
@@ -121,7 +169,7 @@ function correctadd(){
 	document.getElementById("correct").innerHTML = right + ' correct';
 
 	add = document.createElement('div');
-	add.innerHTML = currentword;
+	add.innerHTML = WordWithDef[currentwordIndex];
 	add.classList.add("loggedwordcorrect"); 
 	document.getElementById("wordlog").appendChild(add);
 }
@@ -151,22 +199,4 @@ function backButton(){
 	currentword = "start";
 	right = 0;
 	wrong = 0;
-}
-
-function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send(null);
 }
