@@ -20,7 +20,7 @@ function readTextFile(file)
 readTextFile("assets/wordlists/wordlist.txt");
 var WordWithDef = allText.split("\n");
 for(var i =0; i<WordWithDef.length; i++){
-	WordWithDef[i] = WordWithDef[i].substring(0,WordWithDef[i].length-4);
+	WordWithDef[i] = WordWithDef[i].substring(0,WordWithDef[i].length-3);
 }
 var words = [];
 for(var i =0; i<WordWithDef.length; i++){
