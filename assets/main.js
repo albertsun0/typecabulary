@@ -23,13 +23,27 @@ for(var i =0; i<WordWithDef.length; i++){
 	WordWithDef[i] = WordWithDef[i].substring(0,WordWithDef[i].length-3);
 }
 var words = [];
-for(var i =0; i<WordWithDef.length; i++){
-	temp = WordWithDef[i].split(/[\s,(-]+/);
-	words[i] = temp[0];
+function setDefaultWords()
+{
+	words = [];
+	for(var i =0; i<WordWithDef.length; i++){
+		temp = WordWithDef[i].split(/[\s,(-]+/);
+		words[i] = temp[0];
+	}
 }
+async function setSelinaWords(){
+	await fetch('http://192.168.254.76:8080/misspelledList')
+	.then(response=>response.json())
+	.then(list => { 
+		console.log(list);
+		words = list; 
+	})
+}
+setDefaultWords()
 
 var start = false;
 var startSpeedrun = false;
+var startSelinaMode= false;
 
 var right = 0;
 var wrong = 0;
@@ -41,7 +55,7 @@ var myTimer;
 function tick(){
 	var minutes;
 
-    if(start){
+    if(start || startSelinaMode){
     	timeElapsed++;
     	var minutes = timeElapsed/60;
     }
@@ -68,6 +82,8 @@ function stoptimer(){
     clearInterval(myTimer);
     start = false;
     startSpeedrun = false;
+    startSelinaMode = false;
+    
     timeElapsed = 0;
 }
 
@@ -81,11 +97,6 @@ function beginPractice() {
 	start = true;
 	begin();
 }
-/*window.onload=function(){
-  const box = document.getElementById('inputbox');
-	box.addEventListener('input', checktext);
-}
-*/
 
 function beginSpeedrun(){
 	console.log("Start speedrun");
@@ -96,8 +107,17 @@ function beginSpeedrun(){
 	document.getElementById("time").innerHTML = Math.floor(speedrunTime/60) +':' +("0" + (speedrunTime%60)).slice(-2);
 }
 
-function begin(){
+function beginSelinaMode(){
+	console.log("start selina mode");
+	startSelinaMode = true;
+	setSelinaWords().then(()=> {
+		nextwordIndex = Math.floor(Math.random() * words.length);
+		nextword = words[nextwordIndex];
+		begin();
+	});
+}
 
+function begin(){
 	for(var i=0; i<length-2; i++){ //clears the list of completed words
 		document.getElementById("wordlog").removeChild(document.getElementById("wordlog").lastChild);
 	}
@@ -105,6 +125,7 @@ function begin(){
 	document.getElementById('backButton').style.display = "inline";
 	document.getElementById('startPracticeButton').style.display = "none";
 	document.getElementById('startSpeedrunButton').style.display = "none";
+	document.getElementById('startSelinaModeButton').style.display = "none";
 	document.getElementById('inputbox').value = "";
 	starttimer();
 	document.getElementById("inputbox").focus();
@@ -124,7 +145,7 @@ function RestrictSpace() {
 }
 
 function checktext(){
-	if(start || startSpeedrun){
+	if(start || startSpeedrun || startSelinaMode){
 		console.log("update");
 		const textbox = document.getElementById('inputbox');
 
@@ -169,7 +190,7 @@ function correctadd(){
 	document.getElementById("correct").innerHTML = right + ' correct';
 
 	add = document.createElement('div');
-	add.innerHTML = WordWithDef[currentwordIndex];
+	add.innerHTML = startSelinaMode?currentword:WordWithDef[currentwordIndex];
 	add.classList.add("loggedwordcorrect"); 
 	document.getElementById("wordlog").appendChild(add);
 }
@@ -186,9 +207,13 @@ function incorrectadd(){
 function backButton(){
 	stoptimer();
 	var length = document.getElementById("wordlog").children.length;
+
+	if(startSelinaMode)
+    	setDefaultWords();
 	
 	document.getElementById('startPracticeButton').style.display = "inline";
 	document.getElementById('startSpeedrunButton').style.display = "inline";
+	document.getElementById('startSelinaModeButton').style.display = "inline";
 	document.getElementById('backButton').style.display = "none";
 	document.getElementById('inputbox').value = "";
 	document.getElementById("time").innerHTML = '0:00';
